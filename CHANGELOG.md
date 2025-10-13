@@ -12,3 +12,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Domain-specific exceptions for transport, API, and decoding errors.
 - PHPUnit tests for the authentication workflow using Guzzle mock handlers.
 - Documentation describing how to request tokens via the new client.
+- Account client encapsulating `/public/partner/pec/v3/accounts` operations with typed request/response DTOs and pagination models.
+- Extensive PHPUnit coverage for account creation, lifecycle actions, search filters, and error handling.

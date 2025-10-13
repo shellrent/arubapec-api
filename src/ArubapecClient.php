@@ -6,6 +6,7 @@ namespace Shellrent\Arubapec;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use Shellrent\Arubapec\Account\AccountClient;
 use Shellrent\Arubapec\Auth\AuthClient;
 use Shellrent\Arubapec\Config\ClientConfig;
 
@@ -16,6 +17,8 @@ final class ArubapecClient
     private readonly ClientConfig $config;
 
     private readonly AuthClient $authClient;
+
+    private readonly AccountClient $accountClient;
 
     public function __construct(
         ?ClientInterface $httpClient = null,
@@ -29,11 +32,17 @@ final class ArubapecClient
 
         $this->httpClient = $httpClient ?? new Client($this->config->getHttpClientConfig());
         $this->authClient = new AuthClient($this->httpClient);
+        $this->accountClient = new AccountClient($this->httpClient);
     }
 
     public function auth(): AuthClient
     {
         return $this->authClient;
+    }
+
+    public function account(): AccountClient
+    {
+        return $this->accountClient;
     }
 
     public function getHttpClient(): ClientInterface

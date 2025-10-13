@@ -26,6 +26,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Shellrent\Arubapec\ArubapecClient;
 use Shellrent\Arubapec\Auth\Dto\TokenRequest;
+use Shellrent\Arubapec\Account\Dto\AccountInfoRequest;
 
 // Optionally customise the base URI or default headers
 $client = new ArubapecClient(config: [
@@ -44,6 +45,13 @@ if ($token = $response->getData()) {
 
 if ($response->getDatetime() !== null) {
     echo 'Response datetime: ' . $response->getDatetime()->toRfc3339String();
+}
+
+$accountInfo = $client->account()->info(new AccountInfoRequest('pec@example.com'));
+
+if ($account = $accountInfo->getData()) {
+    printf('Account %s is currently %s', $account->getName(), $account->getStatus());
+    printf('Renewal type: %s', $account->getRenewalData()->getType());
 }
 ```
 
