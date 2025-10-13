@@ -31,6 +31,10 @@ use Shellrent\Arubapec\AdditionalService\Dto\AdditionalServiceCreateRequest;
 use Shellrent\Arubapec\Domain\Dto\DomainByNameRequest;
 use Shellrent\Arubapec\Domain\Dto\DomainInfoRequest;
 use Shellrent\Arubapec\Domain\Dto\DomainSearchRequest;
+use Shellrent\Arubapec\Owner\Dto\OwnerContactData;
+use Shellrent\Arubapec\Owner\Dto\OwnerCreateRequest;
+use Shellrent\Arubapec\Owner\Dto\OwnerSearchOptions;
+use Shellrent\Arubapec\Shared\Dto\OwnerSearchRequest;
 use Shellrent\Arubapec\Shared\Dto\RenewalData;
 use Shellrent\Arubapec\Shared\Dto\PageRequestOptions;
 
@@ -68,6 +72,37 @@ $additionalService = $client->additionalService()->create(new AdditionalServiceC
 
 if ($service = $additionalService->getData()) {
     printf('Additional service %d is %s', $service->getId(), $service->getStatus());
+}
+
+// Manage owners and reuse shared DTOs across modules
+$ownerResponse = $client->owner()->create(new OwnerCreateRequest(
+    'PRIVATO',
+    'Mario',
+    'Rossi',
+    'AAABBB00A00A000A',
+    contacts: new OwnerContactData(
+        'Via Roma 10',
+        'Arezzo',
+        '52100',
+        'AR',
+        'mario.rossi@example.com',
+        '+39.000000000'
+    )
+));
+
+if (($owner = $ownerResponse->getData()) !== null) {
+    printf("Owner %d belongs to %s %s\n", $owner->getId(), $owner->getName(), $owner->getSurname());
+}
+
+$ownerSearch = $client->owner()->search(
+    new OwnerSearchRequest(taxCode: 'AAABBB00A00A000A'),
+    new OwnerSearchOptions(size: 10, sort: ['name,asc'])
+);
+
+if (($ownerPage = $ownerSearch->getData()) !== null) {
+    foreach ($ownerPage->getContent() as $result) {
+        printf("Found owner %s %s with tax code %s\n", $result->getName(), $result->getSurname(), $result->getTaxCode());
+    }
 }
 
 // Retrieve the country catalogue used by various onboarding workflows

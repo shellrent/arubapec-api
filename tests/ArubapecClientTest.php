@@ -9,10 +9,13 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use Shellrent\Arubapec\Account\AccountClient;
 use Shellrent\Arubapec\AdditionalService\AdditionalServiceClient;
 use Shellrent\Arubapec\ArubapecClient;
 use Shellrent\Arubapec\Auth\AuthClient;
 use Shellrent\Arubapec\Country\CountryClient;
+use Shellrent\Arubapec\Domain\DomainClient;
+use Shellrent\Arubapec\Owner\OwnerClient;
 
 class ArubapecClientTest extends TestCase
 {
@@ -22,8 +25,11 @@ class ArubapecClientTest extends TestCase
 
         self::assertInstanceOf(ArubapecClient::class, $client);
         self::assertInstanceOf(AuthClient::class, $client->auth());
+        self::assertInstanceOf(AccountClient::class, $client->account());
         self::assertInstanceOf(AdditionalServiceClient::class, $client->additionalService());
         self::assertInstanceOf(CountryClient::class, $client->country());
+        self::assertInstanceOf(DomainClient::class, $client->domain());
+        self::assertInstanceOf(OwnerClient::class, $client->owner());
     }
 
     public function testCustomHttpClientCanBeInjected(): void

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shellrent\Arubapec\Account\Dto;
+namespace Shellrent\Arubapec\Shared\Dto;
 
 final class OwnerId
 {

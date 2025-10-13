@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shellrent\Arubapec\Account\Dto;
+namespace Shellrent\Arubapec\Shared\Dto;
 
 use Shellrent\Arubapec\Exception\UnexpectedResponseException;
 
-final class CompanyContactDataModel
+final class ContactDataModel
 {
     public function __construct(
         private readonly string $address,
@@ -15,7 +15,8 @@ final class CompanyContactDataModel
         private readonly string $district,
         private readonly ?int $country,
         private readonly string $email,
-        private readonly string $telephoneNumber
+        private readonly string $telephoneNumber,
+        private readonly ?string $mobile
     ) {
     }
 
@@ -26,7 +27,7 @@ final class CompanyContactDataModel
     {
         foreach (['address', 'town', 'zipCode', 'district', 'email', 'telephoneNumber'] as $field) {
             if (!isset($payload[$field]) || !is_string($payload[$field])) {
-                throw new UnexpectedResponseException(sprintf('Missing company contact field %s.', $field));
+                throw new UnexpectedResponseException(sprintf('Missing contact field %s.', $field));
             }
         }
 
@@ -37,7 +38,8 @@ final class CompanyContactDataModel
             $payload['district'],
             isset($payload['country']) ? (int) $payload['country'] : null,
             $payload['email'],
-            $payload['telephoneNumber']
+            $payload['telephoneNumber'],
+            isset($payload['mobile']) ? (string) $payload['mobile'] : null
         );
     }
 
@@ -74,5 +76,10 @@ final class CompanyContactDataModel
     public function getTelephoneNumber(): string
     {
         return $this->telephoneNumber;
+    }
+
+    public function getMobile(): ?string
+    {
+        return $this->mobile;
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shellrent\Arubapec\Domain\Dto;
 
 use Carbon\CarbonImmutable;
-use Shellrent\Arubapec\Account\Dto\OwnerModel;
+use Shellrent\Arubapec\Shared\Dto\OwnerModel;
 use Shellrent\Arubapec\AdditionalService\Dto\AdditionalServiceModel;
 use Shellrent\Arubapec\Exception\UnexpectedResponseException;
 use Shellrent\Arubapec\Shared\Dto\ContractData;

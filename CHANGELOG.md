@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Country client mapping `/public/partner/v2/countries` to expose the ArubaPEC country catalogue with typed DTOs and error handling.
 - Domain client encapsulating `/public/partner/pec/v2/domains` endpoints including certification, lifecycle, search, and mailbox listing workflows.
 - Shared pagination request options reused by account and domain searches.
+- Owner client covering `/public/partner/pec/v2/owners` operations with dedicated request/response DTOs, shared pagination helpers, and PHPUnit coverage.
 
 ### Changed
 - Promoted contract and renewal value objects to the shared namespace for reuse across modules.
+- Moved owner-related DTOs (owner models, identifiers, contacts, pageable metadata) into the shared namespace for reuse across modules.

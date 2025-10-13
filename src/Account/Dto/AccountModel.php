@@ -8,6 +8,7 @@ use Carbon\CarbonImmutable;
 use Shellrent\Arubapec\AdditionalService\Dto\AdditionalServiceModel;
 use Shellrent\Arubapec\Exception\UnexpectedResponseException;
 use Shellrent\Arubapec\Shared\Dto\ContractData;
+use Shellrent\Arubapec\Shared\Dto\OwnerModel;
 use Shellrent\Arubapec\Shared\Dto\RenewalData;
 
 final class AccountModel

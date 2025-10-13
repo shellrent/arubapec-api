@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shellrent\Arubapec\Account\Dto;
 
+use Shellrent\Arubapec\Shared\Dto\OwnerSearchRequest;
+
 final class AccountSearchRequest
 {
     public function __construct(

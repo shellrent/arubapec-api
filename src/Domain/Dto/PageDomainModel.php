@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shellrent\Arubapec\Domain\Dto;
 
-use Shellrent\Arubapec\Account\Dto\PageableModel;
-use Shellrent\Arubapec\Account\Dto\SortModel;
+use Shellrent\Arubapec\Shared\Dto\PageableModel;
+use Shellrent\Arubapec\Shared\Dto\SortModel;
 
 final class PageDomainModel
 {

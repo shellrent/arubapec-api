@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shellrent\Arubapec\Domain\Dto;
 
 use Shellrent\Arubapec\Account\Dto\Interval;
-use Shellrent\Arubapec\Account\Dto\OwnerSearchRequest;
+use Shellrent\Arubapec\Shared\Dto\OwnerSearchRequest;
 
 final class DomainSearchRequest
 {

@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Shellrent\Arubapec\Account\Dto;
+namespace Shellrent\Arubapec\Owner\Dto;
 
+use Shellrent\Arubapec\Shared\Dto\OwnerModel;
 use Shellrent\Arubapec\Shared\Dto\PageableModel;
 use Shellrent\Arubapec\Shared\Dto\SortModel;
 
-final class PageAccountModel
+final class PageOwnerModel
 {
     /**
-     * @param AccountModel[] $content
+     * @param OwnerModel[] $content
      * @param SortModel[] $sort
      */
     public function __construct(
@@ -41,7 +42,7 @@ final class PageAccountModel
                     continue;
                 }
 
-                $content[] = AccountModel::fromArray($item);
+                $content[] = OwnerModel::fromArray($item);
             }
         }
 
@@ -94,7 +95,7 @@ final class PageAccountModel
     }
 
     /**
-     * @return AccountModel[]
+     * @return OwnerModel[]
      */
     public function getContent(): array
     {

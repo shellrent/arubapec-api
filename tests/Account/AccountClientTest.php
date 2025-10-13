@@ -30,8 +30,8 @@ use Shellrent\Arubapec\Account\Dto\AccountSuspendRequest;
 use Shellrent\Arubapec\Account\Dto\AccountSuspendUndoRequest;
 use Shellrent\Arubapec\Account\Dto\AccountTypesResponse;
 use Shellrent\Arubapec\Account\Dto\Interval;
-use Shellrent\Arubapec\Account\Dto\OwnerId;
-use Shellrent\Arubapec\Account\Dto\OwnerSearchRequest;
+use Shellrent\Arubapec\Shared\Dto\OwnerId;
+use Shellrent\Arubapec\Shared\Dto\OwnerSearchRequest;
 use Shellrent\Arubapec\Shared\Dto\RenewalData;
 use Shellrent\Arubapec\Exception\ApiException;
 

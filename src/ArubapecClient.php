@@ -11,6 +11,7 @@ use Shellrent\Arubapec\AdditionalService\AdditionalServiceClient;
 use Shellrent\Arubapec\Auth\AuthClient;
 use Shellrent\Arubapec\Country\CountryClient;
 use Shellrent\Arubapec\Domain\DomainClient;
+use Shellrent\Arubapec\Owner\OwnerClient;
 use Shellrent\Arubapec\Config\ClientConfig;
 
 final class ArubapecClient
@@ -29,6 +30,8 @@ final class ArubapecClient
 
     private readonly DomainClient $domainClient;
 
+    private readonly OwnerClient $ownerClient;
+
     public function __construct(
         ?ClientInterface $httpClient = null,
         ClientConfig|array|null $config = null
@@ -45,6 +48,7 @@ final class ArubapecClient
         $this->additionalServiceClient = new AdditionalServiceClient($this->httpClient);
         $this->countryClient = new CountryClient($this->httpClient);
         $this->domainClient = new DomainClient($this->httpClient);
+        $this->ownerClient = new OwnerClient($this->httpClient);
     }
 
     public function auth(): AuthClient
@@ -70,6 +74,11 @@ final class ArubapecClient
     public function domain(): DomainClient
     {
         return $this->domainClient;
+    }
+
+    public function owner(): OwnerClient
+    {
+        return $this->ownerClient;
     }
 
     public function getHttpClient(): ClientInterface
