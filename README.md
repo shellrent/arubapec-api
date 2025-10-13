@@ -25,11 +25,31 @@ composer require shellrent/arubapec-api:dev-main
 require __DIR__ . '/vendor/autoload.php';
 
 use Shellrent\Arubapec\ArubapecClient;
+use Shellrent\Arubapec\Auth\Dto\TokenRequest;
 
-$client = new ArubapecClient();
+// Optionally customise the base URI or default headers
+$client = new ArubapecClient(config: [
+    'base_uri' => 'https://api.pec.aruba.it',
+]);
 
-// TODO: configure credentials and use the client methods
+$response = $client->auth()->token(new TokenRequest(
+    'username@example.com',
+    'super-secret-password'
+));
+
+if ($token = $response->getData()) {
+    printf('Access token: %s', $token->getAccessToken());
+    printf('Expires in: %d seconds', $token->getExpiresIn());
+}
+
+if ($response->getDatetime() !== null) {
+    echo 'Response datetime: ' . $response->getDatetime()->toRfc3339String();
+}
 ```
+
+When the API responds with an error (HTTP status code >= 400) an
+`Shellrent\Arubapec\Exception\ApiException` is thrown. You can inspect the
+embedded `RestErrorResponse` to understand the cause of the failure.
 
 ## Development workflow
 

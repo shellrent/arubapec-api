@@ -1,0 +1,9 @@
+# Shared DTO Guidelines
+
+## Scope
+- Applies to reusable DTOs under `src/Shared`.
+
+## Conventions
+- DTOs must be immutable and instantiated through explicit constructors or named constructors like `fromArray`.
+- Provide typed getters for every property; avoid exposing raw arrays.
+- When converting from array data, validate presence of mandatory fields and throw `UnexpectedResponseException` for inconsistencies.

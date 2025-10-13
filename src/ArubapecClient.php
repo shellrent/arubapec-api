@@ -4,22 +4,45 @@ declare(strict_types=1);
 
 namespace Shellrent\Arubapec;
 
-/**
- * Base client for the ArubaPEC API.
- *
- * This class will encapsulate HTTP communication with the ArubaPEC API
- * and provide convenient methods for interacting with each endpoint
- * defined in the OpenAPI specification.
- */
-class ArubapecClient
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use Shellrent\Arubapec\Auth\AuthClient;
+use Shellrent\Arubapec\Config\ClientConfig;
+
+final class ArubapecClient
 {
-    /**
-     * Placeholder constructor.
-     *
-     * Add required dependencies (such as an HTTP client) as parameters when
-     * implementing the actual API calls.
-     */
-    public function __construct()
+    private readonly ClientInterface $httpClient;
+
+    private readonly ClientConfig $config;
+
+    private readonly AuthClient $authClient;
+
+    public function __construct(
+        ?ClientInterface $httpClient = null,
+        ClientConfig|array|null $config = null
+    ) {
+        if (is_array($config)) {
+            $config = ClientConfig::fromArray($config);
+        }
+
+        $this->config = $config ?? new ClientConfig();
+
+        $this->httpClient = $httpClient ?? new Client($this->config->getHttpClientConfig());
+        $this->authClient = new AuthClient($this->httpClient);
+    }
+
+    public function auth(): AuthClient
     {
+        return $this->authClient;
+    }
+
+    public function getHttpClient(): ClientInterface
+    {
+        return $this->httpClient;
+    }
+
+    public function getConfig(): ClientConfig
+    {
+        return $this->config;
     }
 }
