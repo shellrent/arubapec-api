@@ -27,6 +27,8 @@ require __DIR__ . '/vendor/autoload.php';
 use Shellrent\Arubapec\ArubapecClient;
 use Shellrent\Arubapec\Auth\Dto\TokenRequest;
 use Shellrent\Arubapec\Account\Dto\AccountInfoRequest;
+use Shellrent\Arubapec\AdditionalService\Dto\AdditionalServiceCreateRequest;
+use Shellrent\Arubapec\Shared\Dto\RenewalData;
 
 // Optionally customise the base URI or default headers
 $client = new ArubapecClient(config: [
@@ -52,6 +54,16 @@ $accountInfo = $client->account()->info(new AccountInfoRequest('pec@example.com'
 if ($account = $accountInfo->getData()) {
     printf('Account %s is currently %s', $account->getName(), $account->getStatus());
     printf('Renewal type: %s', $account->getRenewalData()->getType());
+}
+
+$additionalService = $client->additionalService()->create(new AdditionalServiceCreateRequest(
+    'pec@example.com',
+    'NEWSLETTER',
+    new RenewalData('T', 1)
+));
+
+if ($service = $additionalService->getData()) {
+    printf('Additional service %d is %s', $service->getId(), $service->getStatus());
 }
 ```
 

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shellrent\Arubapec\Account\Dto;
 
+use Shellrent\Arubapec\Shared\Dto\ContractData;
+use Shellrent\Arubapec\Shared\Dto\RenewalData;
+
 final class AccountCreateRequest
 {
     public function __construct(

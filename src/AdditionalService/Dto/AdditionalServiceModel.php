@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shellrent\Arubapec\Account\Dto;
+namespace Shellrent\Arubapec\AdditionalService\Dto;
 
 use Carbon\CarbonImmutable;
 use Shellrent\Arubapec\Exception\UnexpectedResponseException;
+use Shellrent\Arubapec\Shared\Dto\ContractData;
+use Shellrent\Arubapec\Shared\Dto\RenewalData;
 
 final class AdditionalServiceModel
 {

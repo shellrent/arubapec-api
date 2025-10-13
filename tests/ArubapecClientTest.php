@@ -9,6 +9,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use Shellrent\Arubapec\AdditionalService\AdditionalServiceClient;
 use Shellrent\Arubapec\ArubapecClient;
 use Shellrent\Arubapec\Auth\AuthClient;
 
@@ -20,6 +21,7 @@ class ArubapecClientTest extends TestCase
 
         self::assertInstanceOf(ArubapecClient::class, $client);
         self::assertInstanceOf(AuthClient::class, $client->auth());
+        self::assertInstanceOf(AdditionalServiceClient::class, $client->additionalService());
     }
 
     public function testCustomHttpClientCanBeInjected(): void

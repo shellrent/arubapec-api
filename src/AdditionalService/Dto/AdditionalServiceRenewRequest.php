@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Shellrent\Arubapec\Account\Dto;
+namespace Shellrent\Arubapec\AdditionalService\Dto;
 
 use Shellrent\Arubapec\Shared\Dto\ContractData;
+use Shellrent\Arubapec\Shared\Dto\RenewalData;
 
-final class AccountChangeTypeRequest
+final class AdditionalServiceRenewRequest
 {
     public function __construct(
-        private readonly string $name,
-        private readonly string $type,
+        private readonly int $id,
+        private readonly RenewalData $renewalData,
         private readonly ?ContractData $contractData = null
     ) {
     }
 
     /**
-     * @return array<string, string|array<string, string>>
+     * @return array<string, array<string, mixed>>
      */
     public function toArray(): array
     {
         $payload = [
-            'name' => $this->name,
-            'type' => $this->type,
+            'renewalData' => $this->renewalData->toArray(),
         ];
 
         if ($this->contractData !== null) {
@@ -32,14 +32,14 @@ final class AccountChangeTypeRequest
         return $payload;
     }
 
-    public function getName(): string
+    public function getId(): int
     {
-        return $this->name;
+        return $this->id;
     }
 
-    public function getType(): string
+    public function getRenewalData(): RenewalData
     {
-        return $this->type;
+        return $this->renewalData;
     }
 
     public function getContractData(): ?ContractData

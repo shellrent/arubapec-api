@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shellrent\Arubapec\Account\Dto;
 
+use Shellrent\Arubapec\Shared\Dto\ContractData;
+
 final class AccountChangeExtraSizeRequest
 {
     public function __construct(
