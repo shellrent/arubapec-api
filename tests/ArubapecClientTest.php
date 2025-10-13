@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Shellrent\Arubapec\AdditionalService\AdditionalServiceClient;
 use Shellrent\Arubapec\ArubapecClient;
 use Shellrent\Arubapec\Auth\AuthClient;
+use Shellrent\Arubapec\Country\CountryClient;
 
 class ArubapecClientTest extends TestCase
 {
@@ -22,6 +23,7 @@ class ArubapecClientTest extends TestCase
         self::assertInstanceOf(ArubapecClient::class, $client);
         self::assertInstanceOf(AuthClient::class, $client->auth());
         self::assertInstanceOf(AdditionalServiceClient::class, $client->additionalService());
+        self::assertInstanceOf(CountryClient::class, $client->country());
     }
 
     public function testCustomHttpClientCanBeInjected(): void

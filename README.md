@@ -65,6 +65,13 @@ $additionalService = $client->additionalService()->create(new AdditionalServiceC
 if ($service = $additionalService->getData()) {
     printf('Additional service %d is %s', $service->getId(), $service->getStatus());
 }
+
+// Retrieve the country catalogue used by various onboarding workflows
+$countries = $client->country()->countries();
+
+foreach ($countries->getData() as $country) {
+    printf("Country #%d: %s\n", $country->getId(), $country->getName());
+}
 ```
 
 When the API responds with an error (HTTP status code >= 400) an
