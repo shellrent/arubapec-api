@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Extensive PHPUnit coverage for account creation, lifecycle actions, search filters, and error handling.
 - Additional service client covering `/public/partner/pec/v2/additionalServices` operations with dedicated DTOs and error handling.
 - Country client mapping `/public/partner/v2/countries` to expose the ArubaPEC country catalogue with typed DTOs and error handling.
+- Domain client encapsulating `/public/partner/pec/v2/domains` endpoints including certification, lifecycle, search, and mailbox listing workflows.
+- Shared pagination request options reused by account and domain searches.
 
 ### Changed
 - Promoted contract and renewal value objects to the shared namespace for reuse across modules.

@@ -28,7 +28,11 @@ use Shellrent\Arubapec\ArubapecClient;
 use Shellrent\Arubapec\Auth\Dto\TokenRequest;
 use Shellrent\Arubapec\Account\Dto\AccountInfoRequest;
 use Shellrent\Arubapec\AdditionalService\Dto\AdditionalServiceCreateRequest;
+use Shellrent\Arubapec\Domain\Dto\DomainByNameRequest;
+use Shellrent\Arubapec\Domain\Dto\DomainInfoRequest;
+use Shellrent\Arubapec\Domain\Dto\DomainSearchRequest;
 use Shellrent\Arubapec\Shared\Dto\RenewalData;
+use Shellrent\Arubapec\Shared\Dto\PageRequestOptions;
 
 // Optionally customise the base URI or default headers
 $client = new ArubapecClient(config: [
@@ -71,6 +75,31 @@ $countries = $client->country()->countries();
 
 foreach ($countries->getData() as $country) {
     printf("Country #%d: %s\n", $country->getId(), $country->getName());
+}
+
+// Inspect an existing domain and verify whether it is certifiable
+$domainInfo = $client->domain()->info(new DomainInfoRequest(fullName: 'pec.example.com', loadExtraData: true));
+
+if ($domain = $domainInfo->getData()) {
+    printf('Domain %s expires on %s', $domain->getFullName(), $domain->getEndDate()->toRfc3339String());
+}
+
+$canBeCertified = $client->domain()->verifyCertifiability(new DomainByNameRequest('new-domain.example.com'));
+
+if ($canBeCertified->getData() === true) {
+    echo 'The domain can be certified.';
+}
+
+// Search domains by status with pagination helpers shared across modules
+$search = $client->domain()->search(
+    new DomainSearchRequest(status: 'CERTIFICATO'),
+    new PageRequestOptions(page: 0, size: 20, sort: ['fullName,asc'])
+);
+
+if (($page = $search->getData()) !== null) {
+    foreach ($page->getContent() as $item) {
+        printf("Found domain %s owned by %s %s\n", $item->getFullName(), $item->getOwner()->getName(), $item->getOwner()->getSurname());
+    }
 }
 ```
 
