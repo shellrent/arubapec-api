@@ -24,7 +24,7 @@ use Shellrent\Arubapec\Shared\Dto\RestErrorResponse;
 
 final class DomainClient
 {
-    private const BASE_PATH = '/public/partner/pec/v2/domains';
+    private const BASE_PATH = '/service/public/partner/pec/v2/domains';
 
     public function __construct(private readonly ClientInterface $httpClient)
     {

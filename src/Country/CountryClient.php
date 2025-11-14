@@ -15,7 +15,7 @@ use Shellrent\Arubapec\Shared\Dto\RestErrorResponse;
 
 final class CountryClient
 {
-    private const BASE_PATH = '/public/partner/v2/countries';
+    private const BASE_PATH = '/service/public/partner/v2/countries';
 
     public function __construct(private readonly ClientInterface $httpClient)
     {

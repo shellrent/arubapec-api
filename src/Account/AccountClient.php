@@ -31,7 +31,7 @@ use Shellrent\Arubapec\Shared\Dto\RestErrorResponse;
 
 final class AccountClient
 {
-    private const BASE_PATH = '/public/partner/pec/v3/accounts';
+    private const BASE_PATH = '/service/public/partner/pec/v3/accounts';
 
     public function __construct(private readonly ClientInterface $httpClient)
     {
@@ -69,9 +69,9 @@ final class AccountClient
         return $this->postForAccountInfo(self::BASE_PATH . '/changeType', $request->toArray());
     }
 
-    public function changeExtraSize(AccountChangeExtraSizeRequest $request): AccountInfoResponse
+    public function changeExtraSize(AccountChangeExtraSizeRequest $request): void
     {
-        return $this->postForAccountInfo(self::BASE_PATH . '/extraSize', $request->toArray());
+        $this->post(self::BASE_PATH . '/extraSize', $request->toArray());
     }
 
     public function info(AccountInfoRequest $request): AccountInfoResponse
