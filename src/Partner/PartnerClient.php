@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace Shellrent\Arubapec\Country;
+namespace Shellrent\Arubapec\Partner;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
-use Shellrent\Arubapec\Country\Dto\CountriesResponse;
+use Shellrent\Arubapec\Partner\Dto\PartnerResponse;
 use Shellrent\Arubapec\Exception\ApiException;
 use Shellrent\Arubapec\Exception\NetworkException;
 use Shellrent\Arubapec\Exception\UnexpectedResponseException;
 use Shellrent\Arubapec\Shared\Dto\RestErrorResponse;
 
-final class CountryClient
+final class PartnerClient
 {
-    private const BASE_PATH = '/service/public/partner/v2/countries';
+    private const BASE_PATH = '/service/public/partner/v1/partners';
 
     public function __construct(private readonly ClientInterface $httpClient)
     {
     }
 
-    public function countries(): CountriesResponse
+    public function readPartnerCredit(): PartnerResponse
     {
-        $response = $this->request('GET', self::BASE_PATH);
+        $response = $this->request('GET', self::BASE_PATH. '/readPartnerCredit');
         $decoded = $this->decodeResponse($response);
         $this->throwIfErrorResponse($response, $decoded);
 
-        return CountriesResponse::fromArray($decoded);
+        return PartnerResponse::fromArray($decoded);
     }
 
     /**

@@ -20,7 +20,7 @@ use Shellrent\Arubapec\Shared\Dto\RestErrorResponse;
 
 final class AdditionalServiceClient
 {
-    private const BASE_PATH = '/public/partner/pec/v2/additionalServices';
+    private const BASE_PATH = '/service/public/partner/pec/v2/additionalServices';
 
     public function __construct(private readonly ClientInterface $httpClient)
     {

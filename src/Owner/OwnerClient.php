@@ -20,7 +20,7 @@ use Shellrent\Arubapec\Shared\Dto\RestErrorResponse;
 
 final class OwnerClient
 {
-    private const BASE_PATH = '/public/partner/pec/v2/owners';
+    private const BASE_PATH = '/service/public/partner/pec/v2/owners';
 
     public function __construct(private readonly ClientInterface $httpClient)
     {

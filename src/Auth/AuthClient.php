@@ -17,8 +17,8 @@ use Shellrent\Arubapec\Shared\Dto\RestErrorResponse;
 
 final class AuthClient
 {
-    private const TOKEN_ENDPOINT = '/public/auth/v2/token';
-    private const REFRESH_ENDPOINT = '/public/auth/v2/refresh';
+    private const TOKEN_ENDPOINT = '/service/public/auth/v2/token';
+    private const REFRESH_ENDPOINT = '/service/public/auth/v2/refresh';
 
     public function __construct(private readonly ClientInterface $httpClient)
     {

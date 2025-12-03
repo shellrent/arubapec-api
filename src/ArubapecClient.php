@@ -10,6 +10,7 @@ use Shellrent\Arubapec\Account\AccountClient;
 use Shellrent\Arubapec\AdditionalService\AdditionalServiceClient;
 use Shellrent\Arubapec\Auth\AuthClient;
 use Shellrent\Arubapec\Country\CountryClient;
+use Shellrent\Arubapec\Partner\PartnerClient;
 use Shellrent\Arubapec\Domain\DomainClient;
 use Shellrent\Arubapec\Owner\OwnerClient;
 use Shellrent\Arubapec\Config\ClientConfig;
@@ -47,6 +48,7 @@ final class ArubapecClient
         $this->accountClient = new AccountClient($this->httpClient);
         $this->additionalServiceClient = new AdditionalServiceClient($this->httpClient);
         $this->countryClient = new CountryClient($this->httpClient);
+        $this->partnerClient = new PartnerClient($this->httpClient);
         $this->domainClient = new DomainClient($this->httpClient);
         $this->ownerClient = new OwnerClient($this->httpClient);
     }
