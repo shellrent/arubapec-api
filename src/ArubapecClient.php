@@ -72,6 +72,11 @@ final class ArubapecClient
     {
         return $this->countryClient;
     }
+	
+	public function partner(): PartnerClient
+    {
+        return $this->partnerClient;
+    }
 
     public function domain(): DomainClient
     {
