@@ -17,6 +17,7 @@ use Shellrent\Arubapec\Account\Dto\AccountChangeTypeRequest;
 use Shellrent\Arubapec\Account\Dto\AccountCreateRequest;
 use Shellrent\Arubapec\Account\Dto\AccountInfoRequest;
 use Shellrent\Arubapec\Account\Dto\AccountInfoResponse;
+use Shellrent\Arubapec\Account\Dto\AccountOwnerChangeRequest;
 use Shellrent\Arubapec\Account\Dto\AccountRenewRequest;
 use Shellrent\Arubapec\Account\Dto\AccountSearchOptions;
 use Shellrent\Arubapec\Account\Dto\AccountSearchRequest;
@@ -62,6 +63,12 @@ final class AccountClient
     public function changeRenewalType(AccountChangeRenewalTypeRequest $request): AccountInfoResponse
     {
         return $this->postForAccountInfo(self::BASE_PATH . '/changeRenewalType', $request->toArray());
+    }
+	
+	
+	public function changeOwner(AccountOwnerChangeRequest $request): AccountInfoResponse
+    {
+        return $this->postForAccountInfo(self::BASE_PATH . '/owner-change', $request->toArray());
     }
 
     public function changeType(AccountChangeTypeRequest $request): AccountInfoResponse
