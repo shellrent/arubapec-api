@@ -10,11 +10,10 @@ use Shellrent\Arubapec\Shared\Dto\RestError;
 final class PartnerResponse
 {
     /**
-     * @param PartnerModel[] $data
      * @param RestError[] $errors
      */
     public function __construct(
-        private readonly array $data,
+        private readonly PartnerModel $data,
         private readonly string $version,
         private readonly array $errors
     ) {
@@ -29,16 +28,14 @@ final class PartnerResponse
             throw new UnexpectedResponseException('Missing response version field.');
         }
 
-        $data = [];
+        $data = null;
 
         if (isset($payload['data']) && is_array($payload['data'])) {
-            foreach ($payload['data'] as $row) {
-                if (!is_array($row)) {
-                    continue;
-                }
+            $data = PartnerModel::fromArray($payload['data']);
+        }
 
-                $data[] = PartnerModel::fromArray($row);
-            }
+        if (is_null($data)) {
+            throw new UnexpectedResponseException('Missing response data.');
         }
 
         $errors = [];
@@ -57,9 +54,9 @@ final class PartnerResponse
     }
 
     /**
-     * @return PartnerModel[]
+     * @return PartnerModel
      */
-    public function getData(): array
+    public function getData(): PartnerModel
     {
         return $this->data;
     }

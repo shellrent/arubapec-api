@@ -9,8 +9,8 @@ use Shellrent\Arubapec\Exception\UnexpectedResponseException;
 final class PartnerModel
 {
     public function __construct(
-        private readonly int $remainingCredit,
-        private readonly string $finalRemainingCredit
+        private readonly float $remainingCredit,
+        private readonly ?string $finalRemainingCredit = null
     ) {
     }
 
@@ -19,18 +19,14 @@ final class PartnerModel
      */
     public static function fromArray(array $payload): self
     {
-        if (!isset($payload['remainingCredit']) || !is_int($payload['remainingCredit'])) {
+        if (!isset($payload['remainingCredit']) || !is_string($payload['remainingCredit'])) {
             throw new UnexpectedResponseException('Missing or invalid remainingCredit.');
         }
 
-        if (!isset($payload['finalRemainingCredit']) || !is_string($payload['finalRemainingCredit'])) {
-            throw new UnexpectedResponseException('Missing or invalid finalRemainingCredit.');
-        }
-
-        return new self($payload['remainingCredit'], $payload['finalRemainingCredit']);
+        return new self((float)$payload['remainingCredit'], $payload['finalRemainingCredit'] ?? null);
     }
 
-    public function getRemainingCredit(): int
+    public function getRemainingCredit(): float
     {
         return $this->remainingCredit;
     }
