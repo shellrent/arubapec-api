@@ -9,11 +9,11 @@ use GuzzleHttp\ClientInterface;
 use Shellrent\Arubapec\Account\AccountClient;
 use Shellrent\Arubapec\AdditionalService\AdditionalServiceClient;
 use Shellrent\Arubapec\Auth\AuthClient;
+use Shellrent\Arubapec\Config\ClientConfig;
 use Shellrent\Arubapec\Country\CountryClient;
-use Shellrent\Arubapec\Partner\PartnerClient;
 use Shellrent\Arubapec\Domain\DomainClient;
 use Shellrent\Arubapec\Owner\OwnerClient;
-use Shellrent\Arubapec\Config\ClientConfig;
+use Shellrent\Arubapec\Partner\PartnerClient;
 
 final class ArubapecClient
 {
@@ -32,6 +32,9 @@ final class ArubapecClient
     private readonly DomainClient $domainClient;
 
     private readonly OwnerClient $ownerClient;
+
+    private PartnerClient $partnerClient;
+
 
     public function __construct(
         ?ClientInterface $httpClient = null,
@@ -72,8 +75,8 @@ final class ArubapecClient
     {
         return $this->countryClient;
     }
-	
-	public function partner(): PartnerClient
+
+    public function partner(): PartnerClient
     {
         return $this->partnerClient;
     }
