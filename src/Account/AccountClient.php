@@ -64,9 +64,9 @@ final class AccountClient
     {
         return $this->postForAccountInfo(self::BASE_PATH . '/changeRenewalType', $request->toArray());
     }
-	
-	
-	public function changeOwner(AccountOwnerChangeRequest $request): AccountInfoResponse
+
+
+    public function changeOwner(AccountOwnerChangeRequest $request): AccountInfoResponse
     {
         return $this->postForAccountInfo(self::BASE_PATH . '/owner-change', $request->toArray());
     }

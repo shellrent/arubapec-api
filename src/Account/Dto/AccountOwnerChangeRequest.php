@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shellrent\Arubapec\Account\Dto;
 
-use InvalidArgumentException;
-
 final class AccountOwnerChangeRequest
 {
     public function __construct(
@@ -21,14 +19,12 @@ final class AccountOwnerChangeRequest
      */
     public function toArray(): array
     {
-        $payload = [
+        return [
             'name' => $this->name,
             'newOwnerId' => $this->newOwnerId,
-	        'recoveryEmail' => $this->recoveryEmail,
-	        'mobile' => $this->mobile,
-	    ];
-
-        return $payload;
+            'recoveryEmail' => $this->recoveryEmail,
+            'mobile' => $this->mobile,
+        ];
     }
 
     public function getName(): string
@@ -36,7 +32,7 @@ final class AccountOwnerChangeRequest
         return $this->name;
     }
 
-	 public function getNewOwnerId(): int
+    public function getNewOwnerId(): int
     {
         return $this->newOwnerId;
     }
@@ -45,9 +41,9 @@ final class AccountOwnerChangeRequest
     {
         return $this->recoveryEmail;
     }
-	
-	public function getMobile(): string
-	{
-		return $this->mobile;
-	}
+
+    public function getMobile(): string
+    {
+        return $this->mobile;
+    }
 }
