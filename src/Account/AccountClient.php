@@ -78,7 +78,11 @@ final class AccountClient
 
     public function changeExtraSize(AccountChangeExtraSizeRequest $request): void
     {
-        $this->post(self::BASE_PATH . '/extraSize', $request->toArray());
+        $response = $this->post(self::BASE_PATH . '/extraSize', [
+            'json' => $request->toArray(),
+        ]);
+        $decodedResponse = $this->decodeResponse($response);
+        $this->throwIfErrorResponse($response, $decodedResponse);
     }
 
     public function info(AccountInfoRequest $request): AccountInfoResponse
