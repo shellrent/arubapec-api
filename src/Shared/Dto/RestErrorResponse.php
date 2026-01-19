@@ -16,7 +16,8 @@ final class RestErrorResponse
         private readonly ?string $data,
         private readonly ?CarbonImmutable $datetime,
         private readonly string $version,
-        private readonly array $errors
+        private readonly array $errors,
+        private readonly array $payload
     ) {
     }
 
@@ -55,7 +56,8 @@ final class RestErrorResponse
             isset($payload['data']) ? (string) $payload['data'] : null,
             $datetime,
             $payload['version'],
-            $errors
+            $errors,
+            $payload
         );
     }
 
@@ -80,6 +82,14 @@ final class RestErrorResponse
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getPayload(): array
+    {
+        return $this->payload;
     }
 
     public function getFirstErrorDescription(): ?string
