@@ -7,7 +7,7 @@ namespace Shellrent\Arubapec\Exception;
 use Shellrent\Arubapec\Shared\Dto\RestErrorResponse;
 use Throwable;
 
-final class ApiException extends \RuntimeException
+final class ApiException extends \Exception
 {
     private readonly int $statusCode;
 
