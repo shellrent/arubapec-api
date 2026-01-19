@@ -6,7 +6,7 @@ namespace Shellrent\Arubapec\Exception;
 
 use Throwable;
 
-final class NetworkException extends \RuntimeException
+final class NetworkException extends \Exception
 {
     public function __construct(string $message, ?Throwable $previous = null)
     {
