@@ -26,11 +26,12 @@ final class ApiException extends \Exception
 
     public static function fromErrorResponse(int $statusCode, RestErrorResponse $errorResponse): self
     {
-        $message = 'ArubaPEC API responded with an error.';
+        $errorsJson = json_encode(
+            $errorResponse->getPayload(),
+            JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+        );
 
-        if ($errorResponse->getFirstErrorDescription() !== null) {
-            $message = $errorResponse->getFirstErrorDescription();
-        }
+        $message = $errorsJson !== false ? $errorsJson : '[]';
 
         return new self($message, $statusCode, $errorResponse);
     }
