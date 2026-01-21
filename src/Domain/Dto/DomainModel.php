@@ -20,9 +20,9 @@ final class DomainModel
         private readonly string $typology,
         private readonly string $status,
         private readonly CarbonImmutable $requestDate,
-        private readonly CarbonImmutable $certificationDate,
+        private readonly ?CarbonImmutable $certificationDate,
         private readonly ?CarbonImmutable $cancellationDate,
-        private readonly CarbonImmutable $endDate,
+        private readonly ?CarbonImmutable $endDate,
         private readonly OwnerModel $owner,
         private readonly ?ContractData $contractData,
         private readonly array $additionalServices
@@ -34,7 +34,7 @@ final class DomainModel
      */
     public static function fromArray(array $payload): self
     {
-        foreach (['fullName', 'typology', 'status', 'requestDate', 'certificationDate', 'endDate', 'owner'] as $field) {
+        foreach (['fullName', 'typology', 'status', 'requestDate', 'owner'] as $field) {
             if (!array_key_exists($field, $payload)) {
                 throw new UnexpectedResponseException(sprintf('Missing domain field %s.', $field));
             }
@@ -52,26 +52,26 @@ final class DomainModel
             throw new UnexpectedResponseException('Invalid domain request date.');
         }
 
-        if (!is_string($payload['certificationDate']) || $payload['certificationDate'] === '') {
-            throw new UnexpectedResponseException('Invalid domain certification date.');
-        }
-
-        if (!is_string($payload['endDate']) || $payload['endDate'] === '') {
-            throw new UnexpectedResponseException('Invalid domain end date.');
-        }
-
         if (!is_array($payload['owner'])) {
             throw new UnexpectedResponseException('Invalid domain owner payload.');
         }
 
         $requestDate = self::parseDate($payload['requestDate'], 'request date');
-        $certificationDate = self::parseDate($payload['certificationDate'], 'certification date');
-        $endDate = self::parseDate($payload['endDate'], 'end date');
 
         $cancellationDate = null;
+        $certificationDate = null;
+        $endDate = null;
 
         if (array_key_exists('cancellationDate', $payload)) {
             $cancellationDate = self::parseOptionalDate($payload['cancellationDate'], 'cancellation date');
+        }
+
+        if (array_key_exists('certificationDate', $payload)) {
+            $certificationDate = self::parseOptionalDate($payload['certificationDate'], 'certification date');
+        }
+
+        if (array_key_exists('endDate', $payload)) {
+            $endDate = self::parseOptionalDate($payload['endDate'], 'end date');
         }
 
         $contractData = null;
@@ -148,7 +148,7 @@ final class DomainModel
         return $this->requestDate;
     }
 
-    public function getCertificationDate(): CarbonImmutable
+    public function getCertificationDate(): ?CarbonImmutable
     {
         return $this->certificationDate;
     }
@@ -158,7 +158,7 @@ final class DomainModel
         return $this->cancellationDate;
     }
 
-    public function getEndDate(): CarbonImmutable
+    public function getEndDate(): ?CarbonImmutable
     {
         return $this->endDate;
     }
