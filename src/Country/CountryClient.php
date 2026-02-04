@@ -45,22 +45,28 @@ final class CountryClient
     /**
      * @return array<string, mixed>
      */
-    private function decodeResponse(ResponseInterface $response): array
-    {
-        $body = (string) $response->getBody();
-
-        if ($body === '') {
-            throw new UnexpectedResponseException('Empty response body received from ArubaPEC API.');
-        }
-
-        $decoded = json_decode($body, true);
-
-        if (!is_array($decoded)) {
-            throw new UnexpectedResponseException('Unable to decode JSON response from ArubaPEC API.');
-        }
-
-        return $decoded;
-    }
+	private function decodeResponse(ResponseInterface $response): array
+	{
+		$body = (string) $response->getBody();
+		$statusCode = $response->getStatusCode();
+		
+		if ($body === '') {
+			throw new UnexpectedResponseException('Empty response body received from ArubaPEC API.');
+		}
+		
+		$decoded = json_decode($body, true);
+		
+		if (!is_array($decoded)) {
+			
+			if ($statusCode >= 400 or $statusCode <= 599) {
+				throw new ApiException($response->getReasonPhrase(), $statusCode);
+			}
+			
+			throw new UnexpectedResponseException('Unable to decode JSON response from ArubaPEC API.');
+		}
+		
+		return $decoded;
+	}
 
     /**
      * @param array<string, mixed> $decoded
