@@ -16,6 +16,7 @@ use Shellrent\Arubapec\Domain\Dto\DomainMailboxesResponse;
 use Shellrent\Arubapec\Domain\Dto\DomainOwnerChangeRequest;
 use Shellrent\Arubapec\Domain\Dto\DomainSearchRequest;
 use Shellrent\Arubapec\Domain\Dto\DomainSearchResponse;
+use Shellrent\Arubapec\Domain\Dto\DomainTypologyResponse;
 use Shellrent\Arubapec\Exception\ApiException;
 use Shellrent\Arubapec\Exception\NetworkException;
 use Shellrent\Arubapec\Exception\UnexpectedResponseException;
@@ -91,9 +92,9 @@ final class DomainClient
         return $this->postForBool(self::BASE_PATH . '/verify-certifiability', $request->toArray());
     }
 	
-	public function typology(DomainByNameRequest $request): DomainBoolResponse
+	public function typology(DomainByNameRequest $request): DomainTypologyResponse
     {
-        return $this->postForBool(self::BASE_PATH . '/typology', $request->toArray());
+        return $this->postForTypology(self::BASE_PATH . '/typology', $request->toArray());
     }
 
     /**
@@ -114,6 +115,16 @@ final class DomainClient
         $response = $this->post($uri, ['json' => $payload]);
 
         return $this->mapDomainBoolResponse($response);
+    }
+	
+	/**
+     * @param array<string, mixed> $payload
+     */
+    private function postForTypology(string $uri, array $payload): DomainTypologyResponse
+    {
+        $response = $this->post($uri, ['json' => $payload]);
+
+        return $this->mapTypologyResponse($response);
     }
 
     /**
@@ -166,6 +177,14 @@ final class DomainClient
         $this->throwIfErrorResponse($response, $decoded);
 
         return DomainBoolResponse::fromArray($decoded);
+    }
+	
+	private function mapTypologyResponse(ResponseInterface $response): DomainTypologyResponse
+    {
+        $decoded = $this->decodeResponse($response);
+        $this->throwIfErrorResponse($response, $decoded);
+
+        return DomainTypologyResponse::fromArray($decoded);
     }
 
     /**
