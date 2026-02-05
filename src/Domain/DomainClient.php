@@ -90,6 +90,11 @@ final class DomainClient
     {
         return $this->postForBool(self::BASE_PATH . '/verify-certifiability', $request->toArray());
     }
+	
+	public function typology(DomainByNameRequest $request): DomainBoolResponse
+    {
+        return $this->postForBool(self::BASE_PATH . '/typology', $request->toArray());
+    }
 
     /**
      * @param array<string, mixed> $payload
