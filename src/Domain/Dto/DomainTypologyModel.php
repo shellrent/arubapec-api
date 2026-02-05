@@ -26,10 +26,10 @@ final class DomainTypologyModel
     public static function fromArray(array $payload): self
     {
 		if (!array_key_exists('typology', $payload)) {
-                throw new UnexpectedResponseException(sprintf('Missing domain field %s.', $field));
+                throw new UnexpectedResponseException(sprintf('Missing domain field typology'));
 		}
 
-        if (!is_string($payload['typology']) || !is_string($payload['status'])) {
+        if (!is_string($payload['typology'])) {
             throw new UnexpectedResponseException('Invalid domain typology or status.');
         }
 		
