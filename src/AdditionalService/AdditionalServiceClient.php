@@ -146,16 +146,20 @@ final class AdditionalServiceClient
 	{
 		$statusCode = $response->getStatusCode();
 
-		$errorResponse = RestErrorResponse::fromArray($decoded);
-
 		if ($statusCode >= 200 and $statusCode < 400) {
-			$errors = $errorResponse->getErrors();
-			if (empty($errors)) {
+			if (!isset($decoded['errors']) or empty($decoded['errors'])) {
 				return;
 			}
 
-			throw new ApiException(json_encode($errors), 400);
+			$message = json_encode($decoded);
+			if ($message === false) {
+				$message = 'API returned errors, but response body could not be JSON-encoded.';
+			}
+
+			throw new ApiException($message, 400);
 		}
+
+		$errorResponse = RestErrorResponse::fromArray($decoded);
 
 		throw ApiException::fromErrorResponse($statusCode, $errorResponse);
 	}
