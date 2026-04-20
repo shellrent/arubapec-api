@@ -68,19 +68,25 @@ final class CountryClient
 		return $decoded;
 	}
 
-    /**
-     * @param array<string, mixed> $decoded
-     */
-    private function throwIfErrorResponse(ResponseInterface $response, array $decoded): void
-    {
-        $statusCode = $response->getStatusCode();
+	/**
+	 * @param array<string, mixed> $decoded
+	 * @throws ApiException|UnexpectedResponseException
+	 */
+	private function throwIfErrorResponse(ResponseInterface $response, array $decoded): void
+	{
+		$statusCode = $response->getStatusCode();
 
-        if ($statusCode < 400) {
-            return;
-        }
+		$errorResponse = RestErrorResponse::fromArray($decoded);
 
-        $errorResponse = RestErrorResponse::fromArray($decoded);
+		if ($statusCode >= 200 and $statusCode < 400) {
+			$errors = $errorResponse->getErrors();
+			if (empty($errors)) {
+				return;
+			}
 
-        throw ApiException::fromErrorResponse($statusCode, $errorResponse);
-    }
+			throw new ApiException(json_encode($errors), 400);
+		}
+
+		throw ApiException::fromErrorResponse($statusCode, $errorResponse);
+	}
 }
