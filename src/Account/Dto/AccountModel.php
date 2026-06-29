@@ -88,7 +88,7 @@ final class AccountModel
             $quotas,
             OwnerModel::fromArray($payload['owner']),
             self::parseDate($payload['requestDate'], 'request date'),
-            self::parseDate($payload['certificationDate'] ?? null, 'certification date'),
+            self::parseOptionalDate($payload['certificationDate'] ?? null, 'certification date'),
             self::parseOptionalDate($payload['cancellationDate'] ?? null, 'cancellation date'),
             self::parseOptionalDate($payload['suspensionDate'] ?? null, 'suspension date'),
             self::parseDate($payload['endDate'], 'end date'),
