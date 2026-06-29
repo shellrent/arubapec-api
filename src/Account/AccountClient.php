@@ -213,19 +213,29 @@ final class AccountClient
 		return $decoded;
 	}
 
-    /**
-     * @param array<string, mixed> $decoded
-     */
-    private function throwIfErrorResponse(ResponseInterface $response, array $decoded): void
-    {
-        $statusCode = $response->getStatusCode();
+	/**
+	 * @param array<string, mixed> $decoded
+	 * @throws ApiException|UnexpectedResponseException
+	 */
+	private function throwIfErrorResponse(ResponseInterface $response, array $decoded): void
+	{
+		$statusCode = $response->getStatusCode();
 
-        if ($statusCode < 400) {
-            return;
-        }
+		if ($statusCode >= 200 and $statusCode < 400) {
+			if (!isset($decoded['errors']) or empty($decoded['errors'])) {
+				return;
+			}
 
-        $errorResponse = RestErrorResponse::fromArray($decoded);
+			$message = json_encode($decoded);
+			if ($message === false) {
+				$message = 'API returned errors, but response body could not be JSON-encoded.';
+			}
 
-        throw ApiException::fromErrorResponse($statusCode, $errorResponse);
-    }
+			throw new ApiException($message, 400);
+		}
+
+		$errorResponse = RestErrorResponse::fromArray($decoded);
+
+		throw ApiException::fromErrorResponse($statusCode, $errorResponse);
+	}
 }
