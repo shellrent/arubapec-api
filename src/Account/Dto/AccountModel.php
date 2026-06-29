@@ -24,7 +24,7 @@ final class AccountModel
         private readonly array $quotas,
         private readonly OwnerModel $owner,
         private readonly CarbonImmutable $requestDate,
-        private readonly CarbonImmutable $certificationDate,
+        private readonly ?CarbonImmutable $certificationDate,
         private readonly ?CarbonImmutable $cancellationDate,
         private readonly ?CarbonImmutable $suspensionDate,
         private readonly CarbonImmutable $endDate,
@@ -39,7 +39,7 @@ final class AccountModel
      */
     public static function fromArray(array $payload): self
     {
-        foreach (['name', 'type', 'status', 'owner', 'quotas', 'requestDate', 'certificationDate', 'endDate', 'renewalData'] as $field) {
+        foreach (['name', 'type', 'status', 'owner', 'quotas', 'requestDate', 'endDate', 'renewalData'] as $field) {
             if (!isset($payload[$field])) {
                 throw new UnexpectedResponseException(sprintf('Missing account field %s.', $field));
             }
@@ -88,7 +88,7 @@ final class AccountModel
             $quotas,
             OwnerModel::fromArray($payload['owner']),
             self::parseDate($payload['requestDate'], 'request date'),
-            self::parseDate($payload['certificationDate'], 'certification date'),
+            self::parseOptionalDate($payload['certificationDate'] ?? null, 'certification date'),
             self::parseOptionalDate($payload['cancellationDate'] ?? null, 'cancellation date'),
             self::parseOptionalDate($payload['suspensionDate'] ?? null, 'suspension date'),
             self::parseDate($payload['endDate'], 'end date'),
@@ -159,7 +159,7 @@ final class AccountModel
         return $this->requestDate;
     }
 
-    public function getCertificationDate(): CarbonImmutable
+    public function getCertificationDate(): ?CarbonImmutable
     {
         return $this->certificationDate;
     }
