@@ -27,7 +27,7 @@ final class AccountModel
         private readonly ?CarbonImmutable $certificationDate,
         private readonly ?CarbonImmutable $cancellationDate,
         private readonly ?CarbonImmutable $suspensionDate,
-        private readonly CarbonImmutable $endDate,
+        private readonly ?CarbonImmutable $endDate,
         private readonly RenewalData $renewalData,
         private readonly ?ContractData $contractData,
         private readonly array $additionalServices
@@ -39,7 +39,7 @@ final class AccountModel
      */
     public static function fromArray(array $payload): self
     {
-        foreach (['name', 'type', 'status', 'owner', 'quotas', 'requestDate', 'endDate', 'renewalData'] as $field) {
+        foreach (['name', 'type', 'status', 'owner', 'quotas', 'requestDate', 'renewalData'] as $field) {
             if (!isset($payload[$field])) {
                 throw new UnexpectedResponseException(sprintf('Missing account field %s.', $field));
             }
@@ -91,7 +91,7 @@ final class AccountModel
             self::parseOptionalDate($payload['certificationDate'] ?? null, 'certification date'),
             self::parseOptionalDate($payload['cancellationDate'] ?? null, 'cancellation date'),
             self::parseOptionalDate($payload['suspensionDate'] ?? null, 'suspension date'),
-            self::parseDate($payload['endDate'], 'end date'),
+            self::parseOptionalDate($payload['endDate'] ?? null, 'end date'),
             RenewalData::fromArray($payload['renewalData']),
             $contractData,
             $additionalServices
@@ -174,7 +174,7 @@ final class AccountModel
         return $this->suspensionDate;
     }
 
-    public function getEndDate(): CarbonImmutable
+    public function getEndDate(): ?CarbonImmutable
     {
         return $this->endDate;
     }
